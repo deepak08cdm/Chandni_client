@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Login(props) {
-    const [str, setStr] = React.useState('hello')
+    const [data, setData] = useState({username:'',password:''})
+    
     const handleChange = (e)=>{
-        setStr(e.target.value)
+        const val = {...data,[e.target.name]:e.target.value}
+        setData(val)
     }
-    useEffect(()=>{
-        console.log('loading done')
-    })//componentDidUpdate 
+    const handleClick = (e)=>{
+      console.log(data)
+    }
+
   return (
-    <div style={{backgroundColor:'lightcoral'}}>
-        login
-        {console.log('loading')}
-        <h1>{props.value}</h1>
-        <input onChange={(e)=>{props.setData(e)}} value={props.newValue}/>
+    <div style={{backgroundColor:'lightcoral'}} onChange={handleChange}>
+        
+          <input type='text' name='username' value={data.username}/>
+          <input type='text' name='password' value={data.password}/>
+          <button type='submit' onClick={handleClick}>login</button>
     </div>
   )
 }

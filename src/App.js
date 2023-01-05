@@ -6,20 +6,21 @@ import Navbar from './Component/Navbar/Navbar'
 import Login from './pages/Login'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Pagination from './Component/Pagination/Pagination';
+import { useFetch } from './Helper/CustomHooks/FetchDataHook';
 
 function App() {       // component
   const [data, setData] = useState([])
   const [noOfPages, setNoOfPages] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [currentPageData, setCurrentPageData] = useState([])
-
+  // const [data] = useFetch('https://randomuser.me/api/?results=50')
   const fetchData = async()=>{
-      const res = await fetch('https://randomuser.me/api/?results=50')
+      const res = await fetch('https://randomuser.me/api/?results=100')
       const data1 = await res.json()
       setNoOfPages(data1.results.length/5)
       setData(data1.results)
   }
-
+  
   const pageChange = (n)=>{
     setCurrentPage(n)
   }
@@ -41,6 +42,7 @@ function App() {       // component
     <div className="App">
         <Table data={currentPageData}/>
         <Pagination pageCount={noOfPages} defaultPage={currentPage} pageChange={pageChange}/>
+        {/* <Login/> */}
     </div>
   );
 }
@@ -52,7 +54,8 @@ export default App;
 /** lifeCycleMethod was used inside class component
  * useEffect hook is used to implement life cycle method insde functional component 
  * componentDidMount:- methods     useEffect(()=>{},[])
- * componentDidUpdated:-           useEffect(()=>{})
+ * componentDidUpdated:-           useEffect(()=>{}) it will run for all updates 
+ *                                 useEffect(()=>{},[state]) it will run for particular state udpate
  * componentWillUnmount:-          useEffect(()=>{
  *                                                return ()=>{}   // componentWillUnmount
  *                                                },[])
